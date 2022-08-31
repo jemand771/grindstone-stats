@@ -1,0 +1,20 @@
+<table>
+    <tr>
+        <th class="col-md-1">Y-W</th>
+        <th class="col-md-1">M</th>
+        <th class="col-md-1">T</th>
+        <th class="col-md-1">W</th>
+        <th class="col-md-1">T</th>
+        <th class="col-md-1">F</th>
+    </tr>
+    {% for (year, week), days in
+    analytics.group_daily_by_calweek(analytics.make_rolling(analytics.daily_work_total),
+    analytics.weeks_in_db_filled).items() %}
+    <tr>
+        <td>{{year}}-{{week}}</td>
+        {% for day in days %}
+        <td>{{analytics.format_timedelta(day)}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>

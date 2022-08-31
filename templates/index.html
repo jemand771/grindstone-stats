@@ -1,9 +1,60 @@
 <html>
-    <head>
-        <title>epic stats</title>
-    </head>
-    <body>
-        ayo
-        {{ analytics.total_time() }}
-    </body>
+
+<head>
+    <title>epic stats</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        #table-selector-target div {
+            display: none;
+        }
+
+        #table-selector-target .table-selector-show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="btn-group" id="table-selector" role="group">
+        <input type="radio" class="btn-check" name="tablesel" autocomplete="off" id="radio-time-worked" checked></input>
+        <label class="btn btn-outline-primary" for="radio-time-worked">Time worked</label>
+        <input type="radio" class="btn-check" name="tablesel" autocomplete="off" id="radio-overtime-rolling"></input>
+        <label class="btn btn-outline-primary" for="radio-overtime-rolling">Overtime (Rolling)</label>
+    </div>
+    <div id="table-selector-target">
+        <div id="toggle-view-1" class="table-selector-show">
+            {% include "week_table_work.html" %}
+        </div>
+        <div id="toggle-view-2">
+            {% include "week_table_overtime_rolling.html" %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    
+
+
+
+    <script type="application/javascript">
+
+        for(child of document.getElementById("table-selector").children){
+            child.addEventListener("change", (event) => {
+                let childIdx = Array.prototype.indexOf.call(event.currentTarget.parentNode.children, event.currentTarget);
+                let tableContainer = document.getElementById("table-selector-target");
+                for(tableDiv of tableContainer.children){
+                    tableDiv.classList.remove("table-selector-show");
+                    if(Array.prototype.indexOf.call(tableContainer.children, tableDiv) == childIdx / 2){
+                        tableDiv.classList.add("table-selector-show");
+                    }
+                }
+            });
+        }
+
+    </script>
+</body>
+
 </html>
