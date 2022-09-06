@@ -6,10 +6,11 @@
         <th class="col-md-1">W</th>
         <th class="col-md-1">T</th>
         <th class="col-md-1">F</th>
+        <th class="col-md-1">sum</th>
     </tr>
     {% for (year, week), days in
-    analytics.group_daily_by_calweek(analytics.daily_work_total,
-    analytics.weeks_in_db_filled).items() %}
+    analytics.week_groups_add_sum(analytics.group_daily_by_calweek(analytics.daily_work_total,
+    analytics.weeks_in_db_filled)).items() %}
     <tr>
         <td>{{year}}-{{week}}</td>
         {% for day in days %}

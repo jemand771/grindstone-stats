@@ -164,6 +164,14 @@ class Analytics:
             week_days = [datetime.strptime(f"{year} {week} {day}", "%G %V %w").date() for day in range(1, 6)]
             week_data[(year, week)] = [data.get(day) for day in week_days]
         return week_data
+    
+    @staticmethod
+    def week_groups_add_sum(data: dict[str, list[timedelta]]):
+        return {
+            week: [*times, sum([t for t in times if t], start=timedelta())]
+            for week, times
+            in data.items()
+        }
 
     @staticmethod
     def make_rolling(day_times, reser_before_dates=(date(2022, 6, 27),)):
