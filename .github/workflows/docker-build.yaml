@@ -1,0 +1,23 @@
+name: docker-build
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  build-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: jemand771/docker-build-action@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          platforms: linux/amd64
+  build-uploader:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: jemand771/docker-build-action@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          images: |
+            ghcr.io/${{ github.repository }}-uploader
+          file: uploader.Dockerfile
+          platforms: linux/amd64
