@@ -9,4 +9,4 @@ COPY server.py model.py security.py ./
 COPY templates ./templates
 
 # TODO wsgi
-CMD ["python", "acceptor.py"]
+CMD ["python", "server.py"]
