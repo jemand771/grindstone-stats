@@ -3,6 +3,10 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+
+env:
+  PLATFORMS: linux/amd64
+
 jobs:
   build-server:
     runs-on: ubuntu-latest
@@ -10,7 +14,8 @@ jobs:
       - uses: jemand771/docker-build-action@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          platforms: linux/amd64
+          platforms: ${{ env.PLATFORMS }}
+          push: false
   build-uploader:
     runs-on: ubuntu-latest
     steps:
@@ -20,4 +25,21 @@ jobs:
           images: |
             ghcr.io/${{ github.repository }}-uploader
           file: uploader.Dockerfile
-          platforms: linux/amd64
+          platforms: ${{ env.PLATFORMS }}
+          push: false
+  push-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: push-server
+        uses: jemand771/docker-build-action@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          platforms: ${{ env.PLATFORMS }}
+      - name: push-uploader
+        uses: jemand771/docker-build-action@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          images: |
+            ghcr.io/${{ github.repository }}-uploader
+          file: uploader.Dockerfile
+          platforms: ${{ env.PLATFORMS }}
