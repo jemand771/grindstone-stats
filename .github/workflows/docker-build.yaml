@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  PLATFORMS: linux/amd64
+  PLATFORMS: ""
 
 jobs:
   build-server:
