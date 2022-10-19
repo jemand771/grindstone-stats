@@ -174,11 +174,11 @@ class Analytics:
         }
 
     @staticmethod
-    def make_rolling(day_times, reser_before_dates=(date(2022, 6, 27),)):
+    def make_rolling(day_times, reset_before_dates=(date(2022, 6, 27),)):
         rolling = timedelta()
         rolling_times = {}
         for day, day_time in day_times.items():
-            if day in reser_before_dates:
+            if day in reset_before_dates:
                 rolling = timedelta()
             rolling += day_time
             # TODO some people don't work 40h
